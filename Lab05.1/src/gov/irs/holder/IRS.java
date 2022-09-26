@@ -13,25 +13,14 @@ import java.util.Collection;
 import gov.irs.TaxPayer;
 
 public class IRS {
-  // BUSINESS CODE
-  private Collection<TaxPayer> payers = new ArrayList<>();
-  
-  public void collectTaxes() {
-    for (TaxPayer payer : payers) {
-      payer.payTaxes();
-    }
-  }
-  
-  public void register(TaxPayer payer) {
-    payers.add(payer);
-  }
-  
-
   // SINGLETON CODE
   // so we can see when IRS class is loaded
   static {
     System.out.println("--IRS class loaded");
   }
+  
+  // BUSINESS CODE
+  private Collection<TaxPayer> payers = new ArrayList<>();
   
   // so we can see when the instance is created
   private IRS() {
@@ -52,8 +41,18 @@ public class IRS {
     // no-op
   }
   
+  public void collectTaxes() {
+    for (TaxPayer payer : payers) {
+      payer.payTaxes();
+    }
+  }
+  
+  public void register(TaxPayer payer) {
+    payers.add(payer);
+  }
+  
   private static class IRSHolder {
-    private static IRS instance = new IRS();
+    private static final IRS instance = new IRS();
     
     // so we can see when IRS.IRSHolder class is loaded
     static {
