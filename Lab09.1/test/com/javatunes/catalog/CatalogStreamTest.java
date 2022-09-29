@@ -52,6 +52,11 @@ public class CatalogStreamTest {
   @Test
   public void testTitleEqualsArtistSortNaturalOrder() {
     // TODO
+    List<MusicItem> items = allMusicItems.stream()
+        .filter(item -> item.getArtist().equals(item.getTitle()))
+        .sorted(Comparator.naturalOrder())
+        .collect(Collectors.toList());
+    System.out.println(items);
   }
   
   /**
@@ -64,6 +69,12 @@ public class CatalogStreamTest {
   @Test
   public void testPriceLessThanSortMusicCategory() {
     // TODO
+    List<MusicItem> items = allMusicItems.stream()
+        .filter(item -> item.getPrice() < 12.00)
+        .sorted(Comparator.comparing(MusicItem::getMusicCategory))
+        .collect(Collectors.toList());
+
+    System.out.println(items);
   }
   
   /**
@@ -74,6 +85,12 @@ public class CatalogStreamTest {
   @Test
   public void testSortMusicCategorySortReleaseDateDesc() {
     // TODO
+    List<MusicItem> items = allMusicItems.stream()
+        .filter(item -> item.getMusicCategory() == MusicCategory.ROCK && item.getPrice() < 15)
+        .sorted(Comparator.comparing(MusicItem::getReleaseDate)) //"1983-10-16"
+        .collect(Collectors.toList());
+
+    System.out.println(items);
   }
   
   /**
@@ -85,6 +102,12 @@ public class CatalogStreamTest {
   @Test
   public void testPriceGreaterThanSortPriceDescThenMusicCategory() {
     // TODO
+    List<MusicItem> items = allMusicItems.stream()
+        .filter(item -> item.getPrice() > 17.00)
+        .sorted(Comparator.comparing(MusicItem::getPrice).reversed().thenComparing(MusicItem::getArtist))
+        .collect(Collectors.toList());
+
+    System.out.println(items);
   }
   
   /**
@@ -96,5 +119,10 @@ public class CatalogStreamTest {
   @Test
   public void testReleaseDateSortArtist() {
     // TODO
+    List<MusicItem> items = allMusicItems.stream()
+        .filter(musicItem -> musicItem.getReleaseDate().toString().startsWith("198") && musicItem.getPrice() < 12.00)
+        .sorted(Comparator.comparing(MusicItem::getArtist))
+        .collect(Collectors.toList());
+    System.out.println(items);
   }
 }
